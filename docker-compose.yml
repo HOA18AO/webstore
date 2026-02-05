@@ -1,0 +1,51 @@
+# Default: docker compose up -d   → starts only infra (e.g. db)
+# Run apps locally: npm run dev (client), npm run start:dev (server)
+# Optional: docker compose --profile app up   → run client + server in containers too
+#
+# Env: Compose reads .env from this directory for ${VAR} substitution.
+#      Run from project root, or: docker compose --env-file .env -f docker-compose.yml up
+
+services:
+  db:
+    image: postgres:16-alpine
+    ports:
+      - "${DB_PORT:-5432}:5432"
+    environment:
+      POSTGRES_USER: ${DB_USER:-postgres}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres}
+      POSTGRES_DB: ${DB_NAME:-webstore}
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+  client:
+    profiles:
+      - app
+    build: ./client
+    ports:
+      - "${CLIENT_PORT}:${CLIENT_PORT}"
+    volumes:
+      - ./client:/app
+      - /app/node_modules
+    environment:
+      - PORT=${CLIENT_PORT}
+      - NEXT_PUBLIC_API_URL=http://localhost:${SERVER_PORT}
+      - API_URL=http://server:${SERVER_PORT}
+    depends_on:
+      - server
+
+  server:
+    profiles:
+      - app
+    build: ./server
+    ports:
+      - "${SERVER_PORT}:${SERVER_PORT}"
+    volumes:
+      - ./server:/app
+      - /app/node_modules
+    environment:
+      - PORT=${SERVER_PORT}
+    depends_on:
+      - db
+
+volumes:
+  db_data:
