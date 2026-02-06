@@ -2,7 +2,11 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { Category } from './entities/category.entity';
+import { AuthModule } from './auth/auth.module';
+import { CategoryModule } from './category/category.module';
+import { CustomerModule } from './customer/customer.module';
+import { ProductModule } from './product/product.module';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -16,7 +20,11 @@ import { Category } from './entities/category.entity';
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: process.env.NODE_ENV !== 'production',
     }),
-    TypeOrmModule.forFeature([Category]),
+    AuthModule,
+    CategoryModule,
+    ProductModule,
+    CustomerModule,
+    UserModule,
   ],
   controllers: [AppController],
   providers: [AppService],

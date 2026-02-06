@@ -32,7 +32,9 @@ export class OrderFulfillment {
   @JoinColumn({ name: 'order_code', referencedColumnName: 'code' })
   order: Order;
 
-  @ManyToOne(() => OrderDetail, (detail) => detail.orderFulfillments, { onDelete: 'CASCADE' })
+  @ManyToOne(() => OrderDetail, (detail) => detail.orderFulfillments, {
+    onDelete: 'CASCADE',
+  })
   @JoinColumn({ name: 'order_detail_id' })
   orderDetail: OrderDetail;
 }

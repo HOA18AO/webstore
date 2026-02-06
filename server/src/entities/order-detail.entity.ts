@@ -42,7 +42,9 @@ export class OrderDetail {
   @Column({ type: 'varchar', nullable: true })
   description: string | null;
 
-  @ManyToOne(() => Order, (order) => order.orderDetails, { onDelete: 'CASCADE' })
+  @ManyToOne(() => Order, (order) => order.orderDetails, {
+    onDelete: 'CASCADE',
+  })
   @JoinColumn({ name: 'order_id' })
   order: Order;
 

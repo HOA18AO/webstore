@@ -51,7 +51,11 @@ export class Order {
   @Column({ name: 'bank_transaction_id', type: 'varchar', nullable: true })
   bankTransactionId: string | null;
 
-  @Column({ name: 'created_at', type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  @Column({
+    name: 'created_at',
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP',
+  })
   createdAt: Date;
 
   @Column({ type: 'varchar', nullable: true })

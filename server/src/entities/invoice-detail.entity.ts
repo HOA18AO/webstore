@@ -31,7 +31,9 @@ export class InvoiceDetail {
   @Column({ type: 'float' })
   amount: number;
 
-  @ManyToOne(() => Invoice, (inv) => inv.invoiceDetails, { onDelete: 'CASCADE' })
+  @ManyToOne(() => Invoice, (inv) => inv.invoiceDetails, {
+    onDelete: 'CASCADE',
+  })
   @JoinColumn({ name: 'invoice_id' })
   invoice: Invoice;
 

@@ -24,7 +24,9 @@ export class PurchaseReceipt {
   @Column({ type: 'int' }) // 1 or -1
   quantity: number;
 
-  @ManyToOne(() => PurchaseDetail, (d) => d.purchaseReceipts, { onDelete: 'CASCADE' })
+  @ManyToOne(() => PurchaseDetail, (d) => d.purchaseReceipts, {
+    onDelete: 'CASCADE',
+  })
   @JoinColumn({ name: 'purchase_detail_id' })
   purchaseDetail: PurchaseDetail;
 }

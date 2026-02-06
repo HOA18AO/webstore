@@ -38,7 +38,11 @@ export class Purchase {
   @Column({ type: 'varchar', nullable: true })
   description: string | null;
 
-  @Column({ name: 'created_at', type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  @Column({
+    name: 'created_at',
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP',
+  })
   createdAt: Date;
 
   @ManyToOne(() => Vendor, { onDelete: 'RESTRICT' })
