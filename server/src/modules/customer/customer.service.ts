@@ -1,18 +1,18 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Product } from '../entities/product.entity';
-import { CreateProductDto } from './dto/create-product.dto';
-import { UpdateProductDto } from './dto/update-product.dto';
+import { Customer } from '@entities/customer.entity';
+import { CreateCustomerDto } from './dto/create-customer.dto';
+import { UpdateCustomerDto } from './dto/update-customer.dto';
 
 @Injectable()
-export class ProductService {
+export class CustomerService {
   constructor(
-    @InjectRepository(Product)
-    private readonly repo: Repository<Product>,
+    @InjectRepository(Customer)
+    private readonly repo: Repository<Customer>,
   ) {}
 
-  create(dto: CreateProductDto) {
+  create(dto: CreateCustomerDto) {
     const entity = this.repo.create(dto);
     return this.repo.save(entity);
   }
@@ -23,11 +23,11 @@ export class ProductService {
 
   async findOne(id: number) {
     const entity = await this.repo.findOne({ where: { id } });
-    if (!entity) throw new NotFoundException('Product #' + id + ' not found');
+    if (!entity) throw new NotFoundException('Customer #' + id + ' not found');
     return entity;
   }
 
-  async update(id: number, dto: UpdateProductDto) {
+  async update(id: number, dto: UpdateCustomerDto) {
     const entity = await this.findOne(id);
     Object.assign(entity, dto);
     return this.repo.save(entity);

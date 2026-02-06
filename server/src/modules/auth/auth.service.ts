@@ -3,7 +3,7 @@ import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcrypt';
 import { Repository } from 'typeorm';
-import { User } from '../entities/user.entity';
+import { User } from '@entities/user.entity';
 
 export type UserWithoutPassword = Omit<User, 'password'>;
 
@@ -24,7 +24,7 @@ export class AuthService {
     const ok = await bcrypt.compare(plainPassword, user.password);
     if (!ok) return null;
     const rest = { ...user };
-    delete rest.password;
+    delete (rest as Record<string, unknown>).password;
     return rest;
   }
 

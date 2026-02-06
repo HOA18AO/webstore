@@ -3,7 +3,7 @@ import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { User } from '../../entities/user.entity';
+import { User } from '@entities/user.entity';
 
 export type JwtPayload = { sub: number; username: string; role: string };
 
@@ -28,7 +28,7 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
       throw new UnauthorizedException();
     }
     const rest = { ...user };
-    delete rest.password;
+    delete (rest as Record<string, unknown>).password;
     return rest;
   }
 }
