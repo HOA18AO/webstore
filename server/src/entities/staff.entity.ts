@@ -3,14 +3,14 @@ import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 @Entity('staff')
 export class Staff {
   @PrimaryGeneratedColumn()
-  id: number;
+  id?: number;
 
   @Column({ type: 'varchar', unique: true })
-  code: string;
+  code?: string;
 
   @Column({ type: 'varchar' })
-  name: string;
+  name?: string;
 
   @Column({ type: 'boolean', default: true })
-  active: boolean;
+  active?: boolean;
 }

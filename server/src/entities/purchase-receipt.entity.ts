@@ -10,23 +10,23 @@ import { PurchaseDetail } from './purchase-detail.entity';
 @Entity('purchase_receipt')
 export class PurchaseReceipt {
   @PrimaryGeneratedColumn()
-  id: number;
+  id?: number;
 
   @Column({ name: 'purchase_code', type: 'varchar' })
-  purchaseCode: string;
+  purchaseCode?: string;
 
   @Column({ name: 'purchase_detail_id', type: 'int' })
-  purchaseDetailId: number;
+  purchaseDetailId?: number;
 
   @Column({ name: 'serial_code', type: 'varchar' })
-  serialCode: string;
+  serialCode?: string;
 
   @Column({ type: 'int' }) // 1 or -1
-  quantity: number;
+  quantity?: number;
 
   @ManyToOne(() => PurchaseDetail, (d) => d.purchaseReceipts, {
     onDelete: 'CASCADE',
   })
   @JoinColumn({ name: 'purchase_detail_id' })
-  purchaseDetail: PurchaseDetail;
+  purchaseDetail?: PurchaseDetail;
 }

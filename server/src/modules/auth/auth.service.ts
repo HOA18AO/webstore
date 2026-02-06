@@ -20,7 +20,7 @@ export class AuthService {
     plainPassword: string,
   ): Promise<UserWithoutPassword | null> {
     const user = await this.userRepo.findOne({ where: { username } });
-    if (!user || !user.active) return null;
+    if (!user || !user.active || !user.password) return null;
     const ok = await bcrypt.compare(plainPassword, user.password);
     if (!ok) return null;
     const rest = { ...user };

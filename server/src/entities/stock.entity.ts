@@ -11,32 +11,32 @@ import { Item } from './item.entity';
 @Entity('stock')
 export class Stock {
   @PrimaryGeneratedColumn()
-  id: number;
+  id?: number;
 
   @Column({ name: 'serial_code', type: 'varchar' })
-  serialCode: string;
+  serialCode?: string;
 
   @Column({ name: 'product_code', type: 'varchar' })
-  productCode: string;
+  productCode?: string;
 
   @Column({ name: 'item_code', type: 'varchar' })
-  itemCode: string;
+  itemCode?: string;
 
   @Column({ type: 'varchar', nullable: true })
-  description: string | null;
+  description?: string | null;
 
   @Column({
     name: 'created_at',
     type: 'timestamp',
     default: () => 'CURRENT_TIMESTAMP',
   })
-  createdAt: Date;
+  createdAt?: Date;
 
   @ManyToOne(() => Product, { onDelete: 'RESTRICT' })
   @JoinColumn({ name: 'product_code', referencedColumnName: 'code' })
-  product: Product;
+  product?: Product;
 
   @ManyToOne(() => Item, { onDelete: 'RESTRICT' })
   @JoinColumn({ name: 'item_code', referencedColumnName: 'itemCode' })
-  item: Item;
+  item?: Item;
 }

@@ -13,40 +13,40 @@ import { PurchaseReceipt } from './purchase-receipt.entity';
 @Entity('purchase_detail')
 export class PurchaseDetail {
   @PrimaryGeneratedColumn()
-  id: number;
+  id?: number;
 
   @Column({ name: 'purchase_id', type: 'int' })
-  purchaseId: number;
+  purchaseId?: number;
 
   @Column({ name: 'product_code', type: 'varchar' })
-  productCode: string;
+  productCode?: string;
 
   @Column({ name: 'unit_cost', type: 'float' })
-  unitCost: number;
+  unitCost?: number;
 
   @Column({ type: 'int' })
-  quantity: number;
+  quantity?: number;
 
   @Column({ name: 'additional_fee', type: 'float', default: 0 })
-  additionalFee: number;
+  additionalFee?: number;
 
   @Column({ type: 'float', default: 0 })
-  tax: number;
+  tax?: number;
 
   @Column({ name: 'total_cost', type: 'float' })
-  totalCost: number;
+  totalCost?: number;
 
   @Column({ type: 'varchar', nullable: true })
-  description: string | null;
+  description?: string | null;
 
   @ManyToOne(() => Purchase, (p) => p.purchaseDetails, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'purchase_id' })
-  purchase: Purchase;
+  purchase?: Purchase;
 
   @ManyToOne(() => Product, { onDelete: 'RESTRICT' })
   @JoinColumn({ name: 'product_code', referencedColumnName: 'code' })
-  product: Product;
+  product?: Product;
 
   @OneToMany(() => PurchaseReceipt, (r) => r.purchaseDetail)
-  purchaseReceipts: PurchaseReceipt[];
+  purchaseReceipts?: PurchaseReceipt[];
 }

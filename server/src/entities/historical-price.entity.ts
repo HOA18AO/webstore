@@ -10,30 +10,30 @@ import { Item } from './item.entity';
 @Entity('historical_price')
 export class HistoricalPrice {
   @PrimaryGeneratedColumn()
-  id: number;
+  id?: number;
 
   @Column({ name: 'item_code', type: 'varchar' })
-  itemCode: string;
+  itemCode?: string;
 
   @Column({ type: 'float' })
-  price: number;
+  price?: number;
 
   @Column({ type: 'float', default: 0 }) // percentage
-  tax: number;
+  tax?: number;
 
   @Column({ name: 'additional_fee', type: 'float', default: 0 })
-  additionalFee: number;
+  additionalFee?: number;
 
   @Column({ name: 'final_price', type: 'float' })
-  finalPrice: number;
+  finalPrice?: number;
 
   @Column({ name: 'from', type: 'timestamp' })
-  from: Date;
+  from?: Date;
 
   @Column({ name: 'to', type: 'timestamp' })
-  to: Date;
+  to?: Date;
 
   @ManyToOne(() => Item, { onDelete: 'RESTRICT' })
   @JoinColumn({ name: 'item_code', referencedColumnName: 'itemCode' })
-  item: Item;
+  item?: Item;
 }

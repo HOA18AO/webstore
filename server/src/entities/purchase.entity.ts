@@ -12,43 +12,43 @@ import { PurchaseDetail } from './purchase-detail.entity';
 @Entity('purchase')
 export class Purchase {
   @PrimaryGeneratedColumn()
-  id: number;
+  id?: number;
 
   @Column({ type: 'varchar' })
-  code: string;
+  code?: string;
 
   @Column({ name: 'vendor_code', type: 'varchar' })
-  vendorCode: string;
+  vendorCode?: string;
 
   @Column({ name: 'original_amount', type: 'float', default: 0 })
-  originalAmount: number;
+  originalAmount?: number;
 
   @Column({ name: 'additional_fee', type: 'float', default: 0 })
-  additionalFee: number;
+  additionalFee?: number;
 
   @Column({ type: 'float', default: 0 })
-  tax: number;
+  tax?: number;
 
   @Column({ name: 'final_amount', type: 'float' })
-  finalAmount: number;
+  finalAmount?: number;
 
   @Column({ type: 'varchar', nullable: true }) // pending, processing, completed
-  status: string | null;
+  status?: string | null;
 
   @Column({ type: 'varchar', nullable: true })
-  description: string | null;
+  description?: string | null;
 
   @Column({
     name: 'created_at',
     type: 'timestamp',
     default: () => 'CURRENT_TIMESTAMP',
   })
-  createdAt: Date;
+  createdAt?: Date;
 
   @ManyToOne(() => Vendor, { onDelete: 'RESTRICT' })
   @JoinColumn({ name: 'vendor_code', referencedColumnName: 'code' })
-  vendor: Vendor;
+  vendor?: Vendor;
 
   @OneToMany(() => PurchaseDetail, (d) => d.purchase)
-  purchaseDetails: PurchaseDetail[];
+  purchaseDetails?: PurchaseDetail[];
 }

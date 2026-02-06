@@ -10,27 +10,27 @@ import { Category } from './category.entity';
 @Entity('item')
 export class Item {
   @PrimaryGeneratedColumn()
-  id: number;
+  id?: number;
 
   @Column({ name: 'item_code', type: 'varchar', unique: true })
-  itemCode: string;
+  itemCode?: string;
 
   @Column({ name: 'category_code', type: 'varchar' })
-  categoryCode: string;
+  categoryCode?: string;
 
   @Column({ type: 'varchar' })
-  name: string;
+  name?: string;
 
   @Column({ type: 'varchar', nullable: true })
-  code: string | null;
+  code?: string | null;
 
   @Column({ type: 'boolean', default: true })
-  available: boolean;
+  available?: boolean;
 
   @Column({ type: 'varchar', nullable: true })
-  description: string | null;
+  description?: string | null;
 
   @ManyToOne(() => Category, { onDelete: 'RESTRICT' })
   @JoinColumn({ name: 'category_code', referencedColumnName: 'code' })
-  category: Category;
+  category?: Category;
 }
