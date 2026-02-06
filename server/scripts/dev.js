@@ -5,6 +5,7 @@ const path = require("path");
 const fs = require("fs");
 
 const rootEnvPath = path.join(__dirname, "..", "..", ".env");
+const env = { ...process.env };
 let port = 3001;
 if (fs.existsSync(rootEnvPath)) {
   const content = fs.readFileSync(rootEnvPath, "utf8");
@@ -15,18 +16,17 @@ if (fs.existsSync(rootEnvPath)) {
     if (eq === -1) continue;
     const key = trimmed.slice(0, eq).trim();
     const value = trimmed.slice(eq + 1).trim().replace(/^["']|["']$/g, "");
-    if (key === "SERVER_PORT") {
-      port = parseInt(value, 10) || 3001;
-      break;
-    }
+    env[key] = value;
+    if (key === "SERVER_PORT") port = parseInt(value, 10) || 3001;
   }
 }
+env.PORT = String(port);
 
 const child = spawn("npm", ["run", "start:dev"], {
   stdio: "inherit",
   shell: true,
   cwd: path.join(__dirname, ".."),
-  env: { ...process.env, PORT: String(port) },
+  env,
 });
 
 child.on("exit", (code) => process.exit(code ?? 0));
