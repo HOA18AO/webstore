@@ -15,6 +15,9 @@ export class HistoricalPrice {
   @Column({ name: 'item_code', type: 'varchar' })
   itemCode?: string;
 
+  @Column({ name: 'channel', type: 'varchar' })
+  channel!: string; 
+
   @Column({ type: 'float' })
   price?: number;
 

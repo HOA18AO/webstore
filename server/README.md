@@ -57,7 +57,81 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
-## Deployment
+## Database Migrations
+
+This project uses TypeORM migrations for version-controlled database schema changes.
+
+### Making Entity Changes
+
+1. **Modify an entity** in `src/entities/`:
+   ```typescript
+   // Example: Add a new column to User entity
+   @Entity('user')
+   export class User {
+     // ... existing fields
+
+     @Column({ type: 'varchar', nullable: true })
+     phone?: string;  // New field
+   }
+   ```
+
+2. **Generate a migration** automatically:
+   ```bash
+   npm run db:migrate:generate -- src/migrations/AddPhoneToUser
+   ```
+   TypeORM will detect changes and create a migration file with the required SQL.
+
+3. **Review the generated migration** file (created in `src/migrations/`):
+   ```typescript
+   export class AddPhoneToUser1234567890 implements MigrationInterface {
+     public async up(queryRunner: QueryRunner): Promise<void> {
+       await queryRunner.query(`ALTER TABLE "user" ADD "phone" character varying`);
+     }
+
+     public async down(queryRunner: QueryRunner): Promise<void> {
+       await queryRunner.query(`ALTER TABLE "user" DROP COLUMN "phone"`);
+     }
+   }
+   ```
+
+4. **Run migrations locally**:
+   ```bash
+   # Development (uses TypeScript directly)
+   npm run db:migrate:dev
+
+   # Production (uses compiled JavaScript)
+   npm run db:migrate
+   ```
+
+5. **Revert if needed**:
+   ```bash
+   npm run db:migrate:revert
+   ```
+
+6. **Check migration status**:
+   ```bash
+   npm run db:migrate:show
+   ```
+
+### Migration Commands Reference
+
+| Command | Purpose |
+|---------|---------|
+| `npm run db:migrate:dev` | Run migrations in development (recommended) |
+| `npm run db:migrate` | Run migrations in production (uses dist/) |
+| `npm run db:migrate:generate -- src/migrations/Name` | Auto-generate migration from entity changes |
+| `npm run db:migrate:revert` | Undo the last migration |
+| `npm run db:migrate:show` | View migration status |
+
+### Important Notes
+
+- **Always review generated migrations** before running them in production
+- **Migrations are one-way**: They modify the database schema and track changes with a `migrations` table
+- **Never modify committed migrations**: Create new migrations for changes instead
+- **Development workflow**: Use `npm run db:migrate:dev` for quick iteration
+- **Production deployment**: Run `npm run db:migrate` as part of your deployment pipeline
+
+
 
 When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
 
